@@ -13,7 +13,31 @@ There are no explicitly given bid-ask spreads in the available datasets. Thus, t
 
 There are two kinds of price impact models developed for each traded asset. One serves for actual cost calculation (i.e., how a trade actually impacted the price), and allows the price impact to be non-linear in position size. The other one is used in a Markowitz-type (mean-variance) portfolio weight optimization, and it assumes linearity of the price impact, thus ensuring existent, unique, and analytically explicit solution to the optimization problem. Models are inspired by the approach of Almgren et al. (2005). They involve one explanatory variable, which is a product of the realized price volatility in a certain time interval and the position size expressed as a share of trading volume (possibly exponentiated) in a certain time interval. They are estimated via sum of squared errors minimization (Levenberg-Marquardt algorithm and OLS method). The explanatory variable in the model for weights optimization is constructed only using data up to the last whole hour before a given trade. Additionally, observations in this model are weighted in estimation, so that the predicted impact is closer to the non-linear one for smaller positions, which are more likely to be obtained in weights optimization. The models are developed for each asset separately.
 
+Fees are constant, set for each trading pair, and taken from Binance/ByBit websites. The actual funding rates are included in cost calculation if the trade was opened at the moment of a given funding payment. For the purpose of weights optimization, a prediction of the funding rate is included. Predicted funding rate is equal to the current one. However, since the data is only available for funding payment moments, the rates have been interpolated between payments to obtain their values at different times.
 
+The position sizes of the trades (and their direction) are determined in a Markowitz-type (mean-variance) portfolio weight optimization. First, assets are selected for PCA decomposition. Some of them are traded. For each traded asset, a systematic component of the return is obtained using few first PCs. The difference between actual return and systematic component return is a residual return. ARMA models are estimated on the residual time series, and predictions are obtained for each traded asset. They are trained on rolling calibration windows, and their predictions are used on rolling deployment windows. Covariance matrix for the set of traded asset is obtained by combining Pearson correlation matrix (estimated on calibration widow) and EWMA/GARCH volatilities. The price impact has also been incorporated in the optimization formula (see ).
 
 
 ## Detailed Description
+
+dre
+
+wrt3r
+
+### Data
+
+rtr4g
+
+tggt4
+
+tg4
+
+### Position Sizing
+
+sefg
+
+rrr
+
+r
+
+ergteg
