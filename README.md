@@ -24,7 +24,9 @@ The assets to be used in the PCA decomposition, traded assets, as well as the nu
 
 dre
 
-wrt3r
+### The Idea
+
+The strategy has been built for a basket of cryptocurrencies that are believed to follow the same (short-term) trends, or react to the macro events in a similar manner. Their systematic components are assumed to be the main drivers of their direction, and any deviations are usually an effect of a temporary non-adjustments that will be corrected soon. Ideally, a basket for a mean reversion via PCA strategy would be composed of assets which share a very similar sentiment among market participants, react in a very similar way to events/information regarding broad market (in terms of direction and intensity), and very rarely follow sustained individual trends driven by asset-specific factors (fundamental or any other).
 
 ### Data
 
