@@ -22,26 +22,59 @@ The assets to be used in the PCA decomposition, traded assets, as well as the nu
 
 ## Detailed Description
 
-dre
+Details of the strategy methodology and backtesting procedure are provided below.
 
 ### The Idea
 
 The strategy has been built for a basket of cryptocurrencies that are believed to follow the same (short-term) trends, or react to the macro events in a similar manner. Their systematic components are assumed to be the main drivers of their direction, and any deviations are usually an effect of a temporary non-adjustments that will be corrected soon. Ideally, a basket for a mean reversion via PCA strategy would be composed of assets which share a very similar sentiment among market participants, react in a very similar way to events/information regarding broad market (in terms of direction and intensity), and very rarely follow sustained individual trends driven by asset-specific factors (fundamental or any other).
 
+For such a basket of assets, PCA transformation will be performed in order to construct systematic components of the selected assets' returns by projecting one or few first Principal Components into the original space. These systematic components are meant to reflect parts of the returns which can be attributed to the overall short-term trend of the class of assets represented by the basket. The remaining parts of the returns (residuals) are assumed to exhibit mean reversion, such that the total returns eventually converge to the overall trend. Hence, the time series of the residuals are used in modelling, and the obtained predictions are assumed to be the predictions of the total returns, since the systematic components are orthogonal to the residuals.
+
+The initial universe of cryptocurrencies considered in the strategy is composed of 21 memecoins which have been created around 2023-24, and maintained relative attention until mid-2025. They are deemed to possess the required characteristics due to the following reasons:
+- ersd
+- ddd
+- d
+
 ### Data
 
 rtr4g
 
-tggt4
+### Bid-Ask Spread
 
 tg4
 
-### Position Sizing
+### Price Impact Model
+
+There are two models.
+
+#### Cost Calculation Model
+
+s
+
+#### Weights Optimization Model
+
+s
+
+### Signal Generation and Position Sizing
 
 sefg
 
-rrr
+### Trading and Return Calculation
 
 r
 
-ergteg
+### Hyper-Optimization
+
+s
+
+### Walk-Forward Analysis
+
+s
+
+### Post-Analysis
+
+e
+
+### Further Steps
+
+h
