@@ -43,11 +43,19 @@ The names/shortcuts/tickers of memecoins belonging to the initial universe, as w
 ### Data
 
 The following types of data are used in the backtesting:
-- dd
+- Klines
   - dd
   - d
     - f
-- d
+- Trade-level data
+  - d
+  - s
+- Funding rates
+  - s
+  - s
+- Fees
+
+Hourly klines for spot prices from Cryptocompare are only used for signal generation, and more specifically - for PCA transformation.
 
 ### Bid-Ask Spread
 
