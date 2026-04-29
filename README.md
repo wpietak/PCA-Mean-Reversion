@@ -55,7 +55,7 @@ The following types of data are used in the backtesting:
   - s
 - Fees
 
-Hourly klines for spot prices from Cryptocompare are only used for signal generation, and more specifically - for PCA (inverse) transformation.
+Hourly klines for spot prices from Cryptocompare are only used for signal generation, and more specifically - for PCA transformation.
 
 ### Bid-Ask Spread
 
