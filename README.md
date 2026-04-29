@@ -31,13 +31,23 @@ The strategy has been built for a basket of cryptocurrencies that are believed t
 For such a basket of assets, PCA transformation will be performed in order to construct systematic components of the selected assets' returns by projecting one or few first Principal Components into the original space. These systematic components are meant to reflect parts of the returns which can be attributed to the overall short-term trend of the class of assets represented by the basket. The remaining parts of the returns (residuals) are assumed to exhibit mean reversion, such that the total returns eventually converge to the overall trend. Hence, the time series of the residuals are used in modelling, and the obtained predictions are assumed to be the predictions of the total returns, since the systematic components are orthogonal to the residuals.
 
 The initial universe of cryptocurrencies considered in the strategy is composed of 21 memecoins which have been created around 2023-24, and maintained relative attention until mid-2025. They are deemed to possess the required characteristics due to the following reasons:
-- ersd
-- ddd
-- d
+- they all emerged during the same cycle, mostly within the same stage,
+- all of them, at least at some point, grew large enough, and gained enough attention to significantly strengthen their survivability (Lindy effect), but never came close to majors (like, e.g., DOGE), thus obtaining a specific positioning,
+- they share the same risk sentiment,
+- they are recognized and traded mostly by similar market participants,
+- their value does not depend on any fundamental factors, and it is not strictly attached to specific figures, companies, organizations or events which could play a decisive role in their market perception,
+- for the vast majority of time, their price action is not idiosyncratically driven by news, announcements or events; they usually react to external factors in a similar manner.
+
+The names/shortcuts/tickers of memecoins belonging to the initial universe, as well as those selected as candidates for trading, can be found in XXX notebook.
 
 ### Data
 
-rtr4g
+The following types of data are used in the backtesting:
+- dd
+  - dd
+  - d
+    - f
+- d
 
 ### Bid-Ask Spread
 
