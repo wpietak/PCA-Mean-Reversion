@@ -43,19 +43,19 @@ The names/shortcuts/tickers of memecoins belonging to the initial universe, as w
 ### Data
 
 The following types of data are used in the backtesting:
-- Klines
-  - dd
-  - d
-    - f
-- Trade-level data
-  - d
-  - s
-- Funding rates
-  - s
-  - s
-- Fees
+- Klines (OHLC and volume data)
+  - Cryptocompare - hourly data for spot USDT pairs (obtained directly or through conversion) from different CEXs for all 21 memes, downloaded directly through cryptocompare library
+  - Binance - hourly and minute data for perpetual futures USDT or USDC pairs (USDT/C-margined) for 9 selected memes, downloaded directly via link to data.binance.vision website
+  - ByBit - hourly and minute data for perpetual futures USDT pairs (USDT-margined) for 4 selected memes, obtained by transforming trade-level data downloaded directly via link to public.bybit.com website
+- Trade-level data (price, volume, timestamp, taker side)
+  - Binance - transactions aggregated on market order & price level (each record tells how much volume was traded for a given price within a given market order) for the same pairs as klines, downloaded directly via link to data.binance.vision website
+  - ByBit - transactions aggregated on market order & limit order level (each record tells how much volume was traded within a given market order against a given limit order) for the same pairs as klines, downloaded directly via link to public.bybit.com website
+- Funding rates (payment time and rate)
+  - Binance - indication of payment times and corresponding funding rates for the same pairs as klines, downloaded directly via link to data.binance.vision website
+  - ByBit - indication of payment times and corresponding funding rates for the same pairs as klines, downloaded in csv from bybit.com, and imported in the notebook
+- Fees - rates for (USDT or USDC) perpetual futures from fee tables on binance.com and bybit.com
 
-Hourly klines for spot prices from Cryptocompare are only used for signal generation, and more specifically - for PCA transformation.
+Klines from Cryptocompare are only used for signal generation, and more specifically - for PCA transformation. Hourly klines for Binance and ByBit futures are used for signal generation / position sizing, including PCA transformation, residual time series construction, and volatility and correlation calculation, as well as trading costs and returns calculation.
 
 ### Bid-Ask Spread
 
