@@ -65,10 +65,10 @@ Funding rate data does not require transformation to calculate realized cost. Ho
 ### Bid-Ask Spread
 
 Construction of the bid-ask spread time series is composed of the following steps:
-1. fff
+- fff
   - e
-2. e
-3. s
+- e
+- s
 
 
 ### Price Impact Model
