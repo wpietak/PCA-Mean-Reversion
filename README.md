@@ -55,7 +55,12 @@ The following types of data are used in the backtesting:
   - ByBit - indication of payment times and corresponding funding rates for the same pairs as klines, downloaded in csv from bybit.com, and imported in the notebook
 - Fees - rates for (USDT or USDC) perpetual futures from fee tables on binance.com and bybit.com
 
-Klines from Cryptocompare are only used for signal generation, and more specifically - for PCA transformation. Hourly klines for Binance and ByBit futures are used for signal generation / position sizing, including PCA transformation, residual time series construction, and volatility and correlation calculation, as well as trading costs and returns calculation.
+Klines from Cryptocompare are only used for signal generation, and more specifically - for PCA transformation. Hourly klines for Binance and ByBit futures are used for signal generation / position sizing, including PCA transformation, residual time series construction, and volatility and correlation calculation, as well as trading costs and returns calculation. Spot price data from Cryptocompare for 13 assets selected for trading is not used in the presented backtesting.
+
+Trade-level data has been used to construct bid-ask spread time series and develop price impact models. As for the bid-ask spread time series, daily spreads for each asset were estimated one by one by downloading the trade-level data for each day and calculating the spread with several candidate models. Depending on the model, trade records might have been aggregated on timestamp & taker side level in order to group transactions belonging to the same order. Such aggregation was also performed to prepare the datasets used to estimate price impact models. The latter datasets involve all orders filled at more than one price with average realized price impact recorded for ~7 first months of the backtesting period. The bid-ask spreads time series are constructed for the entire backtesting period.
+
+Funding rate data does not require transformation to calculate realized cost. However, linear interpolation between funding payment times was performed to obtain funding rate predictions for each full hour, since the rate levels are only available for payment times. These predictions are used for signal generation.
+
 
 ### Bid-Ask Spread
 
