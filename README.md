@@ -105,6 +105,10 @@ sefg
 
 r
 
+### Bibliography
+
+Almgren, R., Thum, C., Hauptmann, E., Li, H. (2005). <i>Direct Estimation of Equity Market Impact.</i> Risk, 18(7), 58-62.
+
 ### Hyper-Optimization
 
 s
