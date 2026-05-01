@@ -75,31 +75,14 @@ Construction of the bid-ask spread time series is composed of the following step
 - Floor the bid-ask spread for each day with the tick size, and smooth the time series (after flooring).
 
 The following approaches have been considered to estimate daily bid-ask spreads:
-
-- (1) Delta-based
-  ss 
-- (2) Lambda-based
-  ff
-- (3a) Covariance-based with capped lambda
-  d
-- Covariance-based with lambda
-  d
-
-  4a. Market impact with side indicator linear regression
-
-     dss
-
-4b. Market impact with side indicator lag linear regression
-
-    d
-
-5a. Huang-Stoll-based linear regression 1
-
-    d
-
-5b. Huang-Stoll-based linear regression 2
-
-    d
+- <b>(1) Delta-based:</b> ss 
+- <b>(2) Lambda-based:</b> ff
+- <b>(3a) Covariance-based with capped lambda:</b> d
+- <b>(3b) Covariance-based with lambda:</b> d
+- <b>(4a) Market impact with side indicator linear regression:</b> dss
+- <b>(4b) Market impact with side indicator lag linear regression:</b> d
+- <b>(5a) Huang-Stoll-based linear regression 1:</b> dsd
+- <b>(5b) Huang-Stoll-based linear regression 2:</b> rf4 d
 
 
 ### Price Impact Model
