@@ -65,10 +65,32 @@ Funding rate data does not require transformation to calculate realized cost. Ho
 ### Bid-Ask Spread
 
 Construction of the bid-ask spread time series is composed of the following steps:
-- fff
-  - e
-- e
-- s
+- For each of the 13 assets selected for trading:
+  - for each day within the backtesting period (plus some buffer - this is required for smoothing):
+    - download trade-level data,
+    - estimate model parameters, and derive bid-ask spread based on them (there were 8 different models considered),
+    - save estimated spreads and selected parameters;
+  - imply minimum tick size for each day from klines.
+- Plot generated time series, obtain statistics, analyze the results, and select the final model.
+- Floor the bid-ask spread for each day with the tick size, and smooth the time series (after flooring).
+
+The following approaches have been considered to estimate daily bid-ask spreads:
+1. Delta-based
+   ss
+2. Lambda-based
+   ff
+3a. Covariance-based with capped lambda
+   d
+3b. Covariance-based with lambda
+   d
+4a. Market impact with taker side linear regression
+    d
+4b. Market impact with taker side lag linear regression
+    d
+5a. Huang-Stoll-based linear regression 1
+    d
+5b. Huang-Stoll-based linear regression 2
+    d
 
 
 ### Price Impact Model
