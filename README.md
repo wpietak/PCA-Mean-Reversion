@@ -76,21 +76,14 @@ Construction of the bid-ask spread time series is composed of the following step
 
 The following approaches have been considered to estimate daily bid-ask spreads:
 
-1. Delta-based
-
-   ss
-   
-2. Lambda-based
-
-   ff
-  
-  3a. Covariance-based with capped lambda
-
-     d
-  
-  3b. Covariance-based with lambda
-
-     d
+- (1) Delta-based
+  ss 
+- (2) Lambda-based
+  ff
+- (3a) Covariance-based with capped lambda
+  d
+- Covariance-based with lambda
+  d
 
   4a. Market impact with side indicator linear regression
 
