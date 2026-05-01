@@ -61,7 +61,6 @@ Trade-level data has been used to construct bid-ask spread time series and devel
 
 Funding rate data does not require transformation to calculate realized cost. However, linear interpolation between funding payment times was performed to obtain funding rate predictions for each full hour, since the rate levels are only available for payment times. These predictions are used for signal generation.
 
-
 ### Bid-Ask Spread
 
 Construction of the bid-ask spread time series is composed of the following steps:
@@ -84,7 +83,6 @@ The following approaches have been considered to estimate daily bid-ask spreads:
 - <b>(5a) Huang-Stoll-based linear regression 1:</b> dsd
 - <b>(5b) Huang-Stoll-based linear regression 2:</b> rf4 d
 
-
 ### Price Impact Model
 
 There are two models.
@@ -105,10 +103,6 @@ sefg
 
 r
 
-### Bibliography
-
-Almgren, R., Thum, C., Hauptmann, E., Li, H. (2005). <i>Direct Estimation of Equity Market Impact.</i> Risk, 18(7), 58-62.
-
 ### Hyper-Optimization
 
 s
@@ -124,3 +118,7 @@ e
 ### Further Steps
 
 h
+
+### Bibliography
+
+Almgren, R., Thum, C., Hauptmann, E., Li, H. (2005). <i>Direct Estimation of Equity Market Impact.</i> Risk, 18(7), 58-62.
