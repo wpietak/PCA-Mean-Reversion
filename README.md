@@ -84,17 +84,17 @@ The following approaches have been considered to estimate daily bid-ask spreads:
 
    ff
   
-3a. Covariance-based with capped lambda
+  3a. Covariance-based with capped lambda
 
-   d
+     d
   
-3b. Covariance-based with lambda
+  3b. Covariance-based with lambda
 
-   d
+     d
 
-4a. Market impact with side indicator linear regression
+  4a. Market impact with side indicator linear regression
 
-    d
+     dss
 
 4b. Market impact with side indicator lag linear regression
 
