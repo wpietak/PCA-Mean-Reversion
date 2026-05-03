@@ -75,7 +75,7 @@ Construction of the bid-ask spread time series is composed of the following step
 
 The following approaches have been considered to estimate daily bid-ask spreads:
 - <b>(1) Delta-based:</b> Stoll (1989) models price increments as $\Delta P_t = Q_t \delta S$ if $Q_t = Q_{t-1}$, and $\Delta P_t = Q_t (1 - \delta) S$ if $Q_t <> Q_{t-1}$, where $Q_t$ is a buy/sell indicator, $S$ is the bid-ask spread, and $\delta$ is a parameter. This approach estimates $\delta S$ and $(1 - \delta) S$ by calculating mean price changes for continuation ($Q_t = Q_{t-1}$) and reversal ($Q_t <> Q_{t-1}$), respectively, and infers the bid-ask spread from them.
-- <b>(2) Lambda-based:</b> ff
+- <b>(2) Lambda-based:</b> Huang and Stoll (1997) model price increments as $\Delta P_t = \frac{S}{2} \Delta Q_t + \lambda Q_{t-1} \frac{S}{2} + e_t$, where $\lambda$ is a parameter, and $e_t$ is a stochastic term capturing information reveal and rounding error. In this approach a two-step model is developed. First, $\lambda \frac{S}{2}$ is estimated by regressing $\Delta P_t$ on $Q_{t-1}$ on continuation trades. Next, obtained coefficient is used to estimate $\frac{S}{2}$ by regressing $\Delta P_t - \lambda Q_{t-1} \frac{S}{2}$ on $\Delta Q_t$.
 - <b>(3a) Covariance-based with capped lambda:</b> d
 - <b>(3b) Covariance-based with lambda:</b> d
 - <b>(4a) Market impact with side indicator linear regression:</b> dss
@@ -122,3 +122,5 @@ h
 ### Bibliography
 
 Almgren, R., Thum, C., Hauptmann, E., Li, H. (2005). <i>Direct Estimation of Equity Market Impact.</i> Risk, 18(7), 58-62.
+
+Stoll, H. R. (1989). <i>Inferring the Components of the Bid-Ask Spread: Theory and Empirical Tests.</i> Journal of Finance, 44, 115-134.
