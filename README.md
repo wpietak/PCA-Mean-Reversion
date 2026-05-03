@@ -74,7 +74,7 @@ Construction of the bid-ask spread time series is composed of the following step
 - Floor the bid-ask spread for each day with the tick size, and smooth the time series (after flooring).
 
 The following approaches have been considered to estimate daily bid-ask spreads:
-- <b>(1) Delta-based:</b> Stoll (1989) models price increments as $$ /Delta P_t = Q_t /delta S $$ if $ Q_t = Q_{t-1} $, and $ /Delta P_t = Q_t (1 - /delta) S $ if $ Q_t <> Q_{t-1} $
+- <b>(1) Delta-based:</b> Stoll (1989) models price increments as $\Delta P_t = Q_t \delta S$ if $ Q_t = Q_{t-1} $, and $ /Delta P_t = Q_t (1 - /delta) S $ if $ Q_t <> Q_{t-1} $
 - <b>(2) Lambda-based:</b> ff
 - <b>(3a) Covariance-based with capped lambda:</b> d
 - <b>(3b) Covariance-based with lambda:</b> d
