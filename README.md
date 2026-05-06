@@ -85,6 +85,10 @@ The following approaches have been considered to estimate daily bid-ask spreads:
 
 The implementation of the entire bid-ask spread time series construction process, including data download and preprocessing, models estimation, and results summary and analysis, is presented in XXX notebook. The eventually selected approach is <b>(5a) Huang-Stoll-based linear regression 1</b>. Flooring and smoothing was applied to the spreads estimated with this approach to obtain the final time series used in backtesting.
 
+Floor is applied to each daily spread at the tick size level. Tick size is implied from klines based on the maximum number of digits after decimal point in the quoted prices for a given day. In order to reduce the impact of short-term noise on estimations, smoothing is applied to the floored spreads by taking a 5-day centered moving average weighted with a triangular kernel. 
+
+Constant daily bid-ask spreads are meant to reflect average market conditions prevailing in particular days. In reality, the observed spreads differ from the model constant spread by a stochastic term. Its' impact is supposed to average out across time.
+
 ### Price Impact Model
 
 There are two models.
