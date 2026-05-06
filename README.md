@@ -91,7 +91,9 @@ Constant daily bid-ask spreads are meant to reflect average market conditions pr
 
 ### Price Impact Model
 
-There are two models.
+There are two price impact models developed for the purpose of backtesting - Cost Calculation Model and Weights Optimization Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Position Sizing](/README.md#position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
+
+It is assumed that the price impact, caused by taken trades, fully decreases the return earned. This can be interpreted as price impact being fully temporary, or it being permanent (at least within the trading window), but entirely eliminating buyers/sellers (depending on trade side) that would otherwise push price to the same level.
 
 #### Cost Calculation Model
 
