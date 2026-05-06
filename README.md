@@ -91,9 +91,11 @@ Constant daily bid-ask spreads are meant to reflect average market conditions pr
 
 ### Price Impact Model
 
-There are two price impact models developed for the purpose of backtesting - Cost Calculation Model and Weights Optimization Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Position Sizing](/README.md#signal-generation-and-position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
+There are two price impact models developed for the purpose of backtesting for each asset selected for trading - Cost Calculation Model and Weights Optimization Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Position Sizing](/README.md#signal-generation-and-position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
 
-It is assumed that the price impact, caused by taken trades, fully decreases the return earned. This can be interpreted as price impact being fully temporary, or it being permanent (at least within the trading window), but entirely eliminating buyers/sellers (depending on trade side) that would otherwise push price by the same amount.
+It is assumed that the price impact, caused by taken trades, fully decreases the return earned. This can be interpreted as price impact being fully temporary, or it being permanent (at least within the trading window), but entirely eliminating buyers/sellers (depending on trade side) that would otherwise push price by the same amount (i.e., they are unwilling to make the same trades at more adverse prices).
+
+The models have been estimated using trade-level data aggregated on timestamp & taker side level with volume-weighted average price and resulting impact calculated for each record (order). Additionally, realized volatility, estimated using minute klines, and trading volume, taken from hourly klines, were used to transform the explanatory variable. The models are estimated once, using time series from 22.01.2025 to 16.08.2025 (usually millions of observations), in order to facilitate model development, choice, testing, analysis and usage. They are intended to reflect a sufficiently robust form of relationship between a market order dollar volume and price impact.
 
 #### Cost Calculation Model
 
