@@ -103,9 +103,10 @@ The goal of the Cost Calculation Model is to provide price impact predictions wh
 
 $$\frac{I}{\sigma} = \gamma T sgn(X) \left| \frac{X}{VT} \right|^{\alpha} \left( \frac{\Theta}{V} \right)^{\delta} + \left< noise \right>$$
 
-$$\frac{1}{\sigma} \left( J - \frac{I}{2} \right) = \eta T sgn(X) \left| \frac{X}{VT} \right|^{\beta} + \left< noise \right>$$
+$$\frac{1}{\sigma} \left( J - \frac{I}{2} \right) = \eta sgn(X) \left| \frac{X}{VT} \right|^{\beta} + \left< noise \right>$$,
 
-
+where:
+- eiufh 
 
 #### Weights Optimization Model
 
