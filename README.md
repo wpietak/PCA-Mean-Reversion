@@ -99,7 +99,9 @@ The models have been estimated using trade-level data aggregated on timestamp & 
 
 #### Cost Calculation Model
 
-s
+The goal of the Cost Calculation Model is to provide price impact predictions which would be as close to the impacts expected to be observed in reality (for given conditions) as possible. It is inspired by Almgren et al. (2005) approach to price impact modelling. The aim of Almgren et al. (2005), however, was to distinguish permanent and temporary impact for large orders, usually splitted into several child orders. Hence, the functional form of their model involves two equations:
+$$\frac{I}{\sigma} = \gamma T sgn(X) \left| \frac{X}{VT} \right|^{\alpha} \left( \frac{\Theta}{V} \right)^{\delta} + \left< noise \right>$$
+$$\frac{1}{\sigma} \left( J - \frac{I}{2} \right) = \eta T sgn(X) \left| \frac{X}{VT} \right|^{\beta} + \left< noise \right>$$
 
 #### Weights Optimization Model
 
