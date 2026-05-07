@@ -103,10 +103,19 @@ The goal of the Cost Calculation Model is to provide price impact predictions wh
 
 $$\frac{I}{\sigma} = \gamma T sgn(X) \left| \frac{X}{VT} \right|^{\alpha} \left( \frac{\Theta}{V} \right)^{\delta} + \left< noise \right>$$
 
-$$\frac{1}{\sigma} \left( J - \frac{I}{2} \right) = \eta sgn(X) \left| \frac{X}{VT} \right|^{\beta} + \left< noise \right>$$,
+$$\frac{1}{\sigma} \left( J - \frac{I}{2} \right) = \eta sgn(X) \left| \frac{X}{VT} \right|^{\beta} + \left< noise \right>,$$
 
 where:
-- eiufh 
+- $I$ - permanent impact, i.e., relative price change between order execution start and finish plus some buffer,
+- $J$ - realized impact, i.e., relative difference between price at order execution start and average obtained price,
+- $X$ - order size in number of shares,
+- $V$ - moving average of given stock's daily volume in number of shares,
+- $T$ - volume time of execution, i.e., fraction of an average day's volume realized between start and finish of order execution,
+- $\sigma$ - realized daily volatility,
+- $\Theta$ - the total number of shares outstanding,
+- $\gamma, \alpha, \delta, \eta, \beta$ - coefficients to be estimated.
+
+
 
 #### Weights Optimization Model
 
