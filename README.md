@@ -108,14 +108,25 @@ $$\frac{1}{\sigma} \left( J - \frac{I}{2} \right) = \eta sgn(X) \left| \frac{X}{
 where:
 - $I$ - permanent impact, i.e., relative price change between order execution start and finish plus some buffer,
 - $J$ - realized impact, i.e., relative difference between price at order execution start and average obtained price,
-- $X$ - order size in number of shares,
+- $X$ - order size in number of shares with respective sign (positive for a buy and negative for a sell),
 - $V$ - moving average of given stock's daily volume in number of shares,
 - $T$ - volume time of execution, i.e., fraction of an average day's volume realized between start and finish of order execution,
 - $\sigma$ - realized daily volatility,
 - $\Theta$ - the total number of shares outstanding,
 - $\gamma, \alpha, \delta, \eta, \beta$ - coefficients to be estimated.
 
+However, we are only concerned about the realized impact of a single (child) order. Thus, we only need one formula. Moreover, time execution duration and outstanding shares would not even be applicable (especially given that we develop a separate model for each asset). Therefore, our model formula is the following:
 
+$$J = \eta \sigma sgn(X) \left| \frac{X}{V} \right|^{\beta} + \left< noise \right>,$$
+
+where:
+- $J$ - realized impact, i.e., relative difference between first and average obtained price,
+- $X$ - order volume in dollars (USDC/USDT) with respective sign (positive for a buy and negative for a sell),
+- $V$ - moving average of given asset's daily/hourly volume in dollars (USDC/USDT),
+- $\sigma$ - moving average of given asset's realized daily/hourly volatility,
+- $\eta, \beta$ - coefficients to be estimated.
+
+There are a few additional modifications introduced. Firstly, realized volatility scales the explanatory variable, and not the dependent variable, so that the model directly predicts the price impact for a given order. Secondly, volumes are expressed in dollars (USDC/USDT), because the Position Sizing Model will provide fractions of portfolio's value to be allocated into particular assets. On top of that, there were several different variants of assets' volume and realized volatility tested. 
 
 #### Weights Optimization Model
 
