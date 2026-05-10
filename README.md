@@ -126,7 +126,31 @@ where:
 - $\sigma$ - moving average of given asset's realized daily/hourly volatility,
 - $\eta, \beta$ - coefficients to be estimated.
 
-There are a few additional modifications introduced. Firstly, realized volatility scales the explanatory variable, and not the dependent variable, so that the model directly predicts the price impact for a given order. Secondly, volumes are expressed in dollars (USDC/USDT), because the Position Sizing Model will provide fractions of portfolio's value to be allocated into particular assets. On top of that, there were several different variants of assets' volume and realized volatility tested. 
+There are a few additional modifications introduced. Firstly, realized volatility scales the explanatory variable, and not the dependent variable, so that the model directly predicts the price impact for a given order. Secondly, volumes are expressed in dollars (USDC/USDT), because the Position Sizing Model will provide fractions of portfolio's value to be allocated into particular assets. On top of that, there were several different variants of assets' volume and realized volatility tested.
+
+Daily (hourly) volumes are taken from klines, and they are calculated as a sum of traded contracts quantities multipled by their corresponding prices within a given day (hour). Daily (hourly) realized volatility is a square root of daily (hourly) realized variance, which is calculated as a sum of minute log-returns squares within a given day (hour). Minute returns are obtained using minute klines. In the basic model version, simple daily volume and daily relized volatility are used (i.e., moving average is not applied). Further, models with the following moving average types are considered:
+- centered moving average of daily realized volatility and daily volume with triangular kernel weighting,
+- centered moving average of hourly realized volatility and hourly volume with gaussian kernel weighting,
+- exponentially-weighted moving average of daily realized volatility and daily volume,
+- exponentially-weighted moving average of hourly realized volatility and hourly volume.
+
+The models are estimated through the least squares method, using Levenberg-Marquardt algorithm, which is a combination of Gauss-Markov algorithm (used by Almgren et al. (2005)) and gradient descent. Usage of such algorithm is necessary to estimate the value of exponent ($\beta$ in the formula above). However, once the exponents are obtained, standard OLS is applied, and linear coefficients ($\eta$) estimated with both methods coincide. For the estimated linear regression models, the summaries of standard statistics ($R^2$ in particular) are analyzed. Eventually, the model with <b>exponentially-weighted moving average of hourly realized volatility and hourly volume</b> is selected to be used in the backtesting.
+
+Additionally, the following typical linear regression tests have been performed:
+- ADF and KPSS tests for stationarity of the dependent variable and residuals,
+- Lagrange Multiplier test for autocorrelation of residuals,
+- Breusch-Pagan test for heteroskedasticity,
+- RESET for correctness of specification,
+- Kolmogorov-Smirnov test for normality of error term distribution.
+
+Moreover, various types of impact analysis have been performed for particular assets. This includes:
+- one-time price impact for different order sizes in average conditions,
+- impact distributions for different order sizes,
+- full costs of trade open and close (fees, bid-ask spread, funding and impact) for different order sizes in average conditions,
+- full costs of trade open and close for different order sizes in different conditions,
+- evolution of costs over time.
+
+Data download and preprocessing, and model estimation, analysis and testing can be found in XXX notebook.
 
 #### Weights Optimization Model
 
