@@ -15,7 +15,7 @@ There are two kinds of price impact models developed for each traded asset. One 
 
 Fees are constant, set for each trading pair, and taken from Binance/ByBit websites. The actual funding rates are included in cost calculation if the trade was opened at the moment of a given funding payment. For the purpose of weights optimization, a prediction of the funding rate is included. Predicted funding rate is equal to the current one. However, since the data is only available for funding payment moments, the rates have been interpolated between payments to obtain their values at different times.
 
-The position sizes of the trades (and their direction) are determined in a Markowitz-type (mean-variance) portfolio weight optimization. First, assets are selected for PCA decomposition. Some of them are traded. For each traded asset, a systematic component of the return is obtained using few first PCs. The difference between actual return and systematic component return is a residual return. ARMA models are estimated on the residual time series, and predictions are obtained for each traded asset. They are trained on rolling calibration windows, and their predictions are used on rolling deployment windows. Covariance matrix for the set of traded asset is obtained by combining Pearson correlation matrix (estimated on calibration widow) and EWMA/GARCH volatilities. The price impact has also been incorporated in the optimization formula (for details see [Position Sizing](/README.md#signal-generation-and-position-sizing)).
+The position sizes of the trades (and their direction) are determined in a Markowitz-type (mean-variance) portfolio weight optimization. First, assets are selected for PCA decomposition. Some of them are traded. For each traded asset, a systematic component of the return is obtained using few first PCs. The difference between actual return and systematic component return is a residual return. ARMA models are estimated on the residual time series, and predictions are obtained for each traded asset. They are trained on rolling calibration windows, and their predictions are used on rolling deployment windows. Covariance matrix for the set of traded asset is obtained by combining Pearson correlation matrix (estimated on calibration widow) and EWMA/GARCH volatilities. The price impact has also been incorporated in the optimization formula (for details see [Signal Generation and Position Sizing](/README.md#signal-generation-and-position-sizing)).
 
 The assets to be used in the PCA decomposition, traded assets, as well as the number of PCs to construct systematic components and ARMA orders for each traded asset are selected in the hyper-optimization (hyper-tuning) in Walk-Forward Analysis (WFA). First, a genetic optimization algorithm is run on the in-sample window to select the assets for PCA decomposition. A simplified trading procedure and return calculation is assumed with aim to find stable performance plateau by removing best returns, smoothing performance (Sharpe) and adding penalties for over-reliance on single assets. Next, trading candidates (assets, their number of PCs and ARMA orders) are selected by checking performance in individual trading, and a prioritized search method is used to select the final combinations. Similarly, the best returns are removed, performance (Sharpe) is smoothed, and penalties for over-reliance on single assets are added. The strategy is then deployed on the out-of-sample window, and the windows are rolled until the end of the backtesting period. Out-of-sample performance analysis is provided.
 
@@ -91,7 +91,7 @@ Constant daily bid-ask spreads are meant to reflect average market conditions pr
 
 ### Price Impact Model
 
-There are two price impact models developed for the purpose of backtesting for each asset selected for trading - Cost Calculation Model and Weights Optimization Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Position Sizing](/README.md#signal-generation-and-position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
+There are two price impact models developed for the purpose of backtesting for each asset selected for trading - Cost Calculation Model and Weights Optimization Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Signal Generation and Position Sizing](/README.md#signal-generation-and-position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
 
 It is assumed that the price impact, caused by taken trades, fully decreases the return earned. This can be interpreted as price impact being fully temporary, or it being permanent (at least within the trading window), but entirely eliminating buyers/sellers (depending on trade side) that would otherwise push price by the same amount (i.e., they are unwilling to make the same trades at more adverse prices).
 
@@ -99,7 +99,7 @@ The models have been estimated using trade-level data aggregated on timestamp & 
 
 #### Cost Calculation Model
 
-The goal of the Cost Calculation Model is to provide price impact predictions which would be as close to the impacts expected to be observed in reality (for given conditions) as possible. It is inspired by Almgren et al. (2005) approach to price impact modelling. The aim of Almgren et al. (2005), however, was to distinguish permanent and temporary impact for large orders, usually splitted into several child orders. Hence, the functional form of their model involves two equations:
+The purpose of the Cost Calculation Model is to provide price impact predictions which would be as close to the impacts expected to be observed in reality (for given conditions) as possible. It is inspired by Almgren et al. (2005) approach to price impact modelling. The aim of Almgren et al. (2005), however, was to distinguish permanent and temporary impact for large orders, usually splitted into several child orders. Hence, the functional form of their model involves two equations:
 
 $$\frac{I}{\sigma} = \gamma T sgn(X) \left| \frac{X}{VT} \right|^{\alpha} \left( \frac{\Theta}{V} \right)^{\delta} + \left< noise \right>$$
 
@@ -131,10 +131,10 @@ There are a few additional modifications introduced. Firstly, realized volatilit
 Daily (hourly) volumes are taken from klines, and they are calculated as a sum of traded contracts quantities multipled by their corresponding prices within a given day (hour). Daily (hourly) realized volatility is a square root of daily (hourly) realized variance, which is calculated as a sum of minute log-returns squares within a given day (hour). Minute returns are obtained using minute klines. In the basic model version, simple daily volume and daily relized volatility are used (i.e., moving average is not applied). Further, models with the following moving average types are considered:
 - centered moving average of daily realized volatility and daily volume with triangular kernel weighting,
 - centered moving average of hourly realized volatility and hourly volume with gaussian kernel weighting,
-- exponentially-weighted moving average of daily realized volatility and daily volume,
-- exponentially-weighted moving average of hourly realized volatility and hourly volume.
+- exponentially-weighted moving average (EWMA) of daily realized volatility and daily volume,
+- exponentially-weighted moving average (EWMA) of hourly realized volatility and hourly volume.
 
-The models are estimated through the least squares method, using Levenberg-Marquardt algorithm, which is a combination of Gauss-Markov algorithm (used by Almgren et al. (2005)) and gradient descent. Usage of such algorithm is necessary to estimate the value of exponent ($\beta$ in the formula above). However, once the exponents are obtained, standard OLS is applied, and linear coefficients ($\eta$) estimated with both methods coincide. For the estimated linear regression models, the summaries of standard statistics ($R^2$ in particular) are analyzed. Eventually, the model with <b>exponentially-weighted moving average of hourly realized volatility and hourly volume</b> is selected to be used in the backtesting.
+The models are estimated through the least squares method, using Levenberg-Marquardt algorithm, which is a combination of Gauss-Markov algorithm (used by Almgren et al. (2005)) and gradient descent. Usage of such algorithm is necessary to estimate the value of exponent ($\beta$ in the formula above). However, once the exponents are obtained, standard OLS is applied, and linear coefficients ($\eta$) estimated with both methods coincide. For the estimated linear regression models, the summaries of standard statistics ($R^2$ in particular) are analyzed. Eventually, the model with <b>EWMA of hourly realized volatility and hourly volume</b> is selected to be used in the backtesting.
 
 Additionally, the following typical linear regression tests have been performed:
 - ADF and KPSS tests for stationarity of the dependent variable and residuals,
@@ -154,7 +154,22 @@ Data download and preprocessing, and model estimation, analysis and testing can 
 
 #### Weights Optimization Model
 
-s
+The purpose of the Weights Optimization Model is to provide price impact predictions which will be used to decide about the optimal position size. More specifically, it provides a parameter of a linear function describing relationship between the position size and resulting price impact. This function is involved in the formula of the objective function - which is a subject of optimization with respect to portfolio weights - and it must be linear for the solution to be found analytically (for details see [Signal Generation and Position Sizing](/README.md#signal-generation-and-position-sizing)).
+
+It is thus meant to linearly approximate the actual impact - given by the Cost Calculation Model - from an ex ante perspective, that is, before a given order is placed. Hence, asset's volume and realized volatility up to the last full hour before a given order is taken into account. Therefore, the model formula is the following:
+
+$$J_i = \eta_{lin} \times \sigma_{t(i)-1} \times \frac{X_i}{V_{t(i)-1}} + e_i,$$
+
+where:
+- $J_i$ - realized impact of order $i$, i.e., relative difference between first and average obtained price,
+- $X_i$ - order $i$'s volume in dollars (USDC/USDT) with respective sign (positive for a buy and negative for a sell),
+- $t(i)$ - an hourly interval within which order $i$ has been filled (e.g., 4 PM - 5 PM for an order filled at 4:17:33.258 PM),
+- $V_t$ - EWMA of given asset's hourly volume in dollars (USDC/USDT) up to hour $t$ included,
+- $\sigma_t$ - EWMA of given asset's realized hourly volatility up to hour $t$ included,
+- $e_i$ - error term,
+- $\eta_{lin}$ - coefficient to be estimated.
+
+The model is developed only for the moving averages corresponding to those in the selected Cost Calculation Model, and the same dataset is used for model estimation. The model is estimated with weighted OLS method. Weighting is adjusted such that the linear approximation is closer to the actual impact for order volumes that will be most often observed in trading simulation during backtesting. Observations with order volumes within ranges expected to be usually given by the Position Sizing Model (based on returns predictions) are assigned higher weights. 
 
 ### Signal Generation and Position Sizing
 
