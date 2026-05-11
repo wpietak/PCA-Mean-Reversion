@@ -91,7 +91,7 @@ Constant daily bid-ask spreads are meant to reflect average market conditions pr
 
 ### Price Impact Model
 
-There are two price impact models developed for the purpose of backtesting for each asset selected for trading - Cost Calculation Model and Weights Optimization Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Signal Generation and Position Sizing](/README.md#signal-generation-and-position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
+There are two price impact models developed for the purpose of backtesting for each asset selected for trading - Cost Calculation (CC) Model and Weights Optimization (WO) Model. Cost Calculation Model is used to calculate the actual impact which given trade had (or would have) on the asset price/return. Weights Optimization Model is used to provide parameters which would enter the formula assigning optimal portfolio weights (see [Signal Generation and Position Sizing](/README.md#signal-generation-and-position-sizing)); in other words, it provides predictions used by other model to decide on position sizes. 
 
 It is assumed that the price impact, caused by taken trades, fully decreases the return earned. This can be interpreted as price impact being fully temporary, or it being permanent (at least within the trading window), but entirely eliminating buyers/sellers (depending on trade side) that would otherwise push price by the same amount (i.e., they are unwilling to make the same trades at more adverse prices).
 
@@ -130,7 +130,7 @@ There are a few additional modifications introduced. Firstly, realized volatilit
 
 Daily (hourly) volumes are taken from klines, and they are calculated as a sum of traded contracts quantities multipled by their corresponding prices within a given day (hour). Daily (hourly) realized volatility is a square root of daily (hourly) realized variance, which is calculated as a sum of minute log-returns squares within a given day (hour). Minute returns are obtained using minute klines. In the basic model version, simple daily volume and daily relized volatility are used (i.e., moving average is not applied). Further, models with the following moving average types are considered:
 - centered moving average of daily realized volatility and daily volume with triangular kernel weighting,
-- centered moving average of hourly realized volatility and hourly volume with gaussian kernel weighting,
+- centered moving average of hourly realized volatility and hourly volume with Gaussian kernel weighting,
 - exponentially-weighted moving average (EWMA) of daily realized volatility and daily volume,
 - exponentially-weighted moving average (EWMA) of hourly realized volatility and hourly volume.
 
@@ -169,7 +169,9 @@ where:
 - $e_i$ - error term,
 - $\eta_{lin}$ - coefficient to be estimated.
 
-The model is developed only for the moving averages corresponding to those in the selected Cost Calculation Model, and the same dataset is used for model estimation. The model is estimated with weighted OLS method. Weighting is adjusted such that the linear approximation is closer to the actual impact for order volumes that will be most often observed in trading simulation during backtesting. Observations with order volumes within ranges expected to be usually given by the Position Sizing Model (based on returns predictions) are assigned higher weights. 
+The model is developed only for the moving averages corresponding to those in the selected Cost Calculation Model, and the same dataset is used for model estimation. The model is estimated with Weighted Least Squares (WLS) method. Weighting is adjusted such that the linear approximation is closer to the actual impact for order volumes that will be most often observed in trading simulation during backtesting. Observations with order volumes within ranges expected to be usually given by the Position Sizing Model (based on returns predictions) are assigned higher weights. 
+
+More specifically, weights are assigned based on Cost Calculation Model impact predictions for particular observations, using Gaussian kernel with specified impact center. Base model with equal weighting and models with different kernel center and scaling parameters are developed for each asset. Predictions for a non-linear model are compared visually with predictions for various linear models, and a kernel center & scaling pair is selected for each asset to construct weights. The final models are estimated, and WLS summaries and impact comparisons for WO vs. CC Models are provided. The estimation procedure and all analyses are presented in XXX notebook. 
 
 ### Signal Generation and Position Sizing
 
