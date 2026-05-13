@@ -175,7 +175,13 @@ More specifically, weights are assigned based on Cost Calculation Model impact p
 
 ### Signal Generation and Position Sizing
 
-sefg
+The procedure determining positions to take is the following:
+1. PCA transformation and inverse transformation are performed to construct systematic components and resulting residuals (difference between return and its' systematic component).
+2. Using constructed residual time series, ARMA is trained on the rolling calibration window and predictions are generated for the rolling deployment window. Residuals predictions are used as returns predictions in further steps, since residual, by construction, is orthogonal to the systematic component (i.e., remaining part of the return).
+3. A trade is taken in a given period for a given asset, if its' predicted return exceeds by some buffer the fixed costs of opening and closing a trade on a given side (long if prediction is positive and short if it is negative) in this period. The fixed costs include fees (paid twice), bid-ask spread (two half-spreads) and funding rate (or funding rate prediction if funding is not paid at the open), while buffer is a defined parameter.
+4. The final position sizes are determined by the analytical solution to a Markowitz-type (mean-variance) optimization formula with price impact incorporated.
+
+The strategy assumes defining some fixed time horizon (in hours) for predictions and trading. In the presented backtesting only 1-hour horizon is considered.
 
 ### Trading and Return Calculation
 
