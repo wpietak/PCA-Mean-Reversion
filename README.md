@@ -176,23 +176,47 @@ More specifically, weights are assigned based on Cost Calculation Model impact p
 ### Signal Generation and Position Sizing
 
 The procedure determining positions to take is the following:
-1. PCA transformation and inverse transformation are performed to construct systematic components and resulting residuals (difference between return and its' systematic component).
+1. PCA transformation and inverse transformation are performed to construct systematic components and resulting residuals (difference between return and its' systematic component). The projection matrix is constructed on a rolling calibration window, and it is further used to perform (inverse) transformation on a rolling deployment window.
 2. Using constructed residual time series, ARMA is trained on the rolling calibration window and predictions are generated for the rolling deployment window. Residuals predictions are used as returns predictions in further steps, since residual, by construction, is orthogonal to the systematic component (i.e., remaining part of the return).
 3. A trade is taken in a given period for a given asset, if its' predicted return exceeds by some buffer the fixed costs of opening and closing a trade on a given side (long if prediction is positive and short if it is negative) in this period. The fixed costs include fees (paid twice), bid-ask spread (two half-spreads) and funding rate (or funding rate prediction if funding is not paid at the open), while buffer is a defined parameter.
 4. The final position sizes are determined by the analytical solution to a Markowitz-type (mean-variance) optimization formula with price impact incorporated.
 
 The strategy assumes a fixed time horizon (in hours) is set for predictions and trading. Only one time-step predictions are obtained, thus all return time series must have frequency aligned to this horizon. Positions are also held for this horizon only, unless the same signal is generated in the next time-step. In such case position can be increased or partially reduced. In the presented backtesting only 1-hour horizon is considered.
 
-For a selected basket of assets, PCA transformation is performed, and returns of $k$ first Principal Components (PCs) are obtained:
+For a selected basket of assets, PCA transformation is performed on the calibration window, and returns of $k$ first Principal Components (PCs) are obtained:
 
-$$Z_{n \times k} = X_{n \times d} W_{d \times k},$$
+$$Z_{n \times k}^{cal} = \left( X_{n \times d}^{cal} - J_{n \times d} \mu_{d \times 1}^{cal} \right) W_{d \times k},$$
 
 where:
-- $Z$ - PCs' returns matrix,
-- $X$ - assets' returns matrix,
+- $Z^{cal}$ - matrix of PCs' returns in the calibration window,
+- $X^{cal}$ - matrix of assets' returns in the calibration window,
+- $J$ - all-ones matrix,
+- $\mu^{cal}$ - vector of assets' average returns in the calibration window,
 - $W$ - projection matrix,
-- $n$ - number of observations in a given window,
+- $n$ - number of observations in the calibration window,
 - $d$ - number of assets in the basket.
+
+Next, inverse transformation is performed to obtain the systematic components of assets' returns (i.e., PCs projection into the original space) and resulting residuals:
+
+$$S_{n \times d}^{cal} = Z_{n \times k}^{cal} W_{k \times d}^{\top} + J_{n \times d} \mu_{d \times 1}^{cal}$$
+$$R_{n \times d}^{cal} = X_{n \times d}^{cal} - S_{n \times d}^{cal},$$
+
+where:
+- $S^{cal}$ - matrix of assets' returns' systematic components in the calibration window,
+- $R^{cal}$ - matrix of assets' returns' residuals in the calibration window.
+
+The data from calibration window is mean-centered for the purpose of transformation. In result, systematic component vectors have the same means as total return vectors, and residual vectors have means equal to 0. The latter is desired, since ARMA models will be trained on residual time series. However, mean-centering is not applied to deployment window data, because unconditional expected values of the returns are assumed to be 0, while mean-centering would imply estimating them based on calibration period sample averages, which are not considered to be accurate estimators. Therefore, systematic components and residuals in the deployment period are obtained as follows:
+
+$$S_{m \times d}^{dep} = X_{m \times d}^{dep} W_{d \times k} W_{k \times d}^{\top}$$
+$$R_{m \times d}^{cal} = X_{m \times d}^{dep} - S_{m \times d}^{dep},$$
+
+where:
+- $X^{dep}$ - matrix of assets' returns in the deployment window,
+- $m$ - number of observations in the deployment window,
+- $S^{dep}$ - matrix of assets' returns' systematic components in the deployment window,
+- $R^{dep}$ - matrix of assets' returns' residuals in the deployment window.
+
+Residual time series of selected assets are used in the next steps. Only 13 assets selected for trading can be considered, but, depending on the step in WFA process, the subset may be further reduced. Additionally, different values of $k$ may be chosen for different assets. Hence, the transformation is performed for a range of $k$ values.
 
 ### Trading and Return Calculation
 
