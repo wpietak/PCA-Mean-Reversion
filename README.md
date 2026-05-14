@@ -228,7 +228,10 @@ Once ARMA parameters are estimated, one-time-step predictions are generated for 
 
 #### Trade Signal
 
-For each of the selected assets, a trade will be taken in a given time-step, if the absolute value of predicted residual exceeds the corresponding fixed costs.
+For each of the selected assets, a trade will be taken in a given time-step, if the absolute value of predicted residual exceeds the corresponding fixed costs. The following fixed cost components are considered:
+- <b>Fees:</b> 2 times the lowest tier taker trading fee (for open and close) specified by a given exchange for a given pair. It is assumed fees are known <i>ex ante</i>, since they are constant and explicitly given. They are already expressed in the required form, i.e., in terms of position value's fraction.
+- <b>Bid-Ask Spread:</b> 2 times the half-spread (for open and close)
+- <b>Funding Rate:</b>
 
 ### Trading and Return Calculation
 
