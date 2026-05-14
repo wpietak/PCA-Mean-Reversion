@@ -183,6 +183,8 @@ The procedure determining positions to take is the following:
 
 The strategy assumes a fixed time horizon (in hours) is set for predictions and trading. Only one time-step predictions are obtained, thus all return time series must have frequency aligned to this horizon. Positions are also held for this horizon only, unless the same signal is generated in the next time-step. In such case position can be increased or partially reduced. In the presented backtesting only 1-hour horizon is considered.
 
+#### PCA (Inverse) Transformation
+
 For a selected basket of assets, PCA transformation is performed on the calibration window, and returns of $k$ first Principal Components (PCs) are obtained:
 
 $$Z_{n \times k}^{cal} = \left( X_{n \times d}^{cal} - J_{n \times d} \mu_{d \times 1}^{cal} \right) W_{d \times k},$$
@@ -208,7 +210,7 @@ where:
 The data from calibration window is mean-centered for the purpose of transformation. In result, systematic component vectors have the same means as total return vectors, and residual vectors have means equal to 0. The latter is desired, since ARMA models will be trained on residual time series. However, mean-centering is not applied to deployment window data, because unconditional expected values of the returns are assumed to be 0, while mean-centering would imply estimating them based on calibration period sample averages, which are not considered to be accurate estimators. Therefore, systematic components and residuals in the deployment period are obtained as follows:
 
 $$S_{m \times d}^{dep} = X_{m \times d}^{dep} W_{d \times k} W_{k \times d}^{\top}$$
-$$R_{m \times d}^{cal} = X_{m \times d}^{dep} - S_{m \times d}^{dep},$$
+$$R_{m \times d}^{dep} = X_{m \times d}^{dep} - S_{m \times d}^{dep},$$
 
 where:
 - $X^{dep}$ - matrix of assets' returns in the deployment window,
@@ -217,6 +219,10 @@ where:
 - $R^{dep}$ - matrix of assets' returns' residuals in the deployment window.
 
 Residual time series of selected assets are used in the next steps. Only 13 assets selected for trading can be considered, but, depending on the step in WFA process, the subset may be further reduced. Additionally, different values of $k$ may be chosen for different assets. Hence, the transformation is performed for a range of $k$ values.
+
+#### ARMA
+
+
 
 ### Trading and Return Calculation
 
