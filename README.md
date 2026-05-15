@@ -237,7 +237,11 @@ The net predicted residuals, i.e., predicted residuals less the corresponding fi
 
 #### Markowitz-type Optimization
 
-In order to determine the final position sizes, a Markowitz-type optimization problem with price impact is solved. In the classical formulation of the problem, we have an agent maximizing expected utility of CARA type ($u(x) = 1 - e^{-\lambda x}$, where $\lambda$ is a risk-aversion parameter). If $x$ is the return on a portfolio of assets whose returns are normally distributed with expected value vector $\mu$ and covariance matrix $\Sigma$, then the agent chooses weights $w$ such that $w^{\top} \mu - \frac{\lambda}{2} w^{\top} \Sigma w$ is maximized.
+In order to determine the final position sizes, a Markowitz-type optimization problem with price impact is solved. In the classical formulation of the problem, we have an agent maximizing expected utility of CARA type ($u(x) = 1 - e^{-\lambda x}$, where $\lambda$ is a risk-aversion parameter). If $x$ is the return on a portfolio of $d$ assets whose returns are normally distributed with expected value vector $\mu$ and covariance matrix $\Sigma$, then the agent chooses weights $w$ such that $w^{\top} \mu - \frac{\lambda}{2} w^{\top} \Sigma w$ is maximized, typically with a constraint that $\sum_{i=1}^{d} w_i = 1$.
+
+In our framework, the constant vector of assets' returns' expected values $\mu$ is replaced with a vector-valued function of weights $\mu(w)$. The dependence of expected values on weights is due to the existence of price impact. The price impact is assumed to be deterministic, and hence, $\mu(w)$ is not stochastic. Additionally, there is no constraint on weights imposed, since, on one hand, it is not required to allocate the entire portfolio into the traded assets, and, on the other hand, leverage may be used. (However, in practice the model generates weights which sum is always below 1.) Then, the optimization problem becomes:
+
+$$ \min_w f(w) = w^{\top} \mu(w) - \frac{\lambda}{2} w^{\top} \Sigma w$$
 
 ### Trading and Return Calculation
 
