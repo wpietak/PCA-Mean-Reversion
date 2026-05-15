@@ -237,7 +237,7 @@ The net predicted residuals, i.e., predicted residuals less the corresponding fi
 
 #### Markowitz-type Optimization
 
-In order to determine the final position sizes, a Markowitz-type optimization problem with price impact is solved.
+In order to determine the final position sizes, a Markowitz-type optimization problem with price impact is solved. In the classical formulation of the problem, we have an agent maximizing expected utility of CARA type ($u(x) = 1 - e^{-\lambda x}$, where $\lambda$ is a risk-aversion parameter). If $x$ is the return on a portfolio of assets whose returns are normally distributed with expected value vector $\mu$ and covariance matrix $\Sigma$, then the agent chooses weights $w$ such that $w^{\top} \mu - \frac{\lambda}{2} w^{\top} \Sigma w$ is maximized.
 
 ### Trading and Return Calculation
 
