@@ -262,7 +262,7 @@ $$\nabla f(w) = s - \left( 2 G + \lambda \Sigma \right) w$$
 
 Since $2 G + \lambda \Sigma$ is positive definite (see below), Hessian of $f$ is negative definite, and thus, $\nabla f(w) = 0$ gives a local (and in this case - global) maximum. Therefore, the solution to the optimization problem defined above is:
 
-$$w = \left( 2 G + \lambda \Sigma \right)^{-1} s$$
+$$w^* = \left( 2 G + \lambda \Sigma \right)^{-1} s$$
 
 It can be easily shown that $2 G + \lambda \Sigma$ is strictly positive definite, and hence invertible. If $\Sigma$ is a proper covariance matrix (without perfect correlations), and $\lambda$ is strictly positive (which it is by definition), then $\lambda \Sigma$ must be positive definite. $G$ (and thus $2G$) is trivially positive definite, given it is a diagonal matrix with positive entries (price impact is positive for a buy and negative for a sell). Then, $w^{\top} \left( \lambda \Sigma \right) w > 0$, $w^{\top} \left( 2 G \right) w > 0$, and $w^{\top} \left( 2 G + \lambda \Sigma \right) w > 0$ for all $w \neq 0$.
 
@@ -274,7 +274,7 @@ The portfolio sizing optimization is solved in every time-step separately, while
 
 The full procedure of trading simulation and returns (P&L) calculation, applied in out-of-sample period and at late stages of hyper-optimization over in-sample period, is the following (for any single time-step $t$ in the trading period):
 1. If $t$ is not the first time-step, check if any positions from $t-1$ need to be kept (i.e., if there is a signal of same sign in $t$ as in $t-1$). For the positions that are kept, take values from before close in $t-1$, and for the rest - from after close in $t-1$ (step X). Use them to calculate returns on particular assets and P&L for $t-1$.
-2. Take correlation matrix estimated on the corresponding calibration period and volatilities estimated for $t$, and construct the covariance matrix. Next, obtain optimal portfolio weights for $t$ using provided formula.
+2. Take correlation matrix estimated on the corresponding calibration period and volatilities estimated for $t$, and construct the covariance matrix. Next, obtain optimal portfolio weights $w^*$ for $t$ using provided formula.
 
 ### Hyper-Optimization
 
