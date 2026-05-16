@@ -241,7 +241,34 @@ In order to determine the final position sizes, a Markowitz-type optimization pr
 
 In our framework, the constant vector of assets' returns' expected values $\mu$ is replaced with a vector-valued function of weights $\mu(w)$. The dependence of expected values on weights is due to the existence of price impact. The price impact is assumed to be deterministic, and hence, $\mu(w)$ is not stochastic. Additionally, there is no constraint on weights imposed, since, on one hand, it is not required to allocate the entire portfolio into the traded assets, and, on the other hand, leverage may be used. (However, in practice the model generates weights which sum is always below 1.) Then, the optimization problem becomes:
 
-$$ \max_w f(w) = w^{\top} \mu(w) - \frac{\lambda}{2} w^{\top} \Sigma w$$
+$$\max_w f(w) = w^{\top} \mu(w) - \frac{\lambda}{2} w^{\top} \Sigma w$$
+
+If we assume that the price impact is linear, and the expected value of a single asset's return is simply net predicted return (in our case - residual) minus the order volume multiplied by a respective parameter, that is:
+
+$$\mu(w) = s - G w,$
+
+where:
+- $s$ - a vector of net predicted returns (here: predicted residuals less the corresponding fixed costs),
+- $G$ - a diagonal matrix of linear impact parameters; in our case: $G = \diag{\left( \left[ g_1 ... g_d \right] \right)}$,
+- $g_i = 2 \times \eta_{lin, i} \times \frac{\sigma_i}{V_i} \times p$ for $i = 1, ..., d$, where $\eta_{lin, i}$ is the estimated coefficient, $\sigma_i$ and $V_i$ are respective EWMA realized volatility and EWMA volume (as defined for [Weights Optimization Model](/README.md#weights-optimization-model)) for asset $i$, and $p$ is the current portfolio value,
+
+then we have:
+
+$$f(w) = w^{\top} \left( s - G w \right) - \frac{\lambda}{2} w^{\top} \Sigma w = w^{\top} s - w^{\top} \left( G + \frac{\lambda}{2} \Sigma \right) w,$$
+
+and:
+
+$$\grad f(w) = s - \left( 2 G + \lambda \Sigma \right) w$$
+
+Since $2 G + \lambda \Sigma$ is positive definite (see below), Hessian of $f$ is negative definite, and thus, $\grad f(w) = 0$ gives a local (and in this case - global) maximum. Therefore, the solution to the optimization problem defined above is:
+
+$$w = \left( 2 G + \lambda \Sigma \right)^{-1} s$$
+
+It can be easily shown that $2 G + \lambda \Sigma$ is strictly positive definite, and hence invertible. If $\Sigma$ is a proper covariance matrix (without perfect correlations), and $\lambda$ is strictly positive (which it is by definition), then $\lambda \Sigma$ must be positive definite. $G$ (and thus $2G$) is trivially positive definite, given it is a diagonal matrix with positive entries (price impact is positive for a buy and negative for a sell). Then, $w^{\top} \left( \lambda \Sigma \right) w > 0$, $w^{\top} \left( 2 G \right) w > 0$, and $w^{\top} \left( 2 G + \lambda \Sigma \right) w > 0$ for all $w \neq 0$.
+
+$\Sigma$ is constructed by combining empirical correlation matrix estimated on the respective calibration period (the same as in case of PCA and ARMA) and rolling volatilities re-estimated each time-step. In the presented backtesting only EWMA volatility has been used. $\lambda$ is a parameter which may be adjusted according to needs.
+
+The portfolio sizing optimization is solved in every time-step separately, while PCA and ARMA are recalibrated and deployed periodically on rolling calibration and deployment windows, respectively.
 
 ### Trading and Return Calculation
 
