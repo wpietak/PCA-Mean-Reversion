@@ -272,7 +272,9 @@ The portfolio sizing optimization is solved in every time-step separately, while
 
 ### Trading and Return Calculation
 
-r
+The full procedure of trading simulation and returns (P&L) calculation, applied in out-of-sample period and at late stages of hyper-optimization over in-sample period, is the following (for any single time-step $t$ in the trading period):
+1. If $t$ is not the first time-step, check if any positions from $t-1$ need to be kept (i.e., if there is a signal of same sign in $t$ as in $t-1$). For the positions that are kept, take values from before close in $t-1$, and for the rest - from after close in $t-1$ (step X). Use them to calculate returns on particular assets and P&L for $t-1$.
+2. Take correlation matrix estimated on the corresponding calibration period and volatilities estimated for $t$, and construct the covariance matrix. Next, obtain optimal portfolio weights for $t$ using provided formula.
 
 ### Hyper-Optimization
 
