@@ -245,11 +245,11 @@ $$\max_w f(w) = w^{\top} \mu(w) - \frac{\lambda}{2} w^{\top} \Sigma w$$
 
 If we assume that the price impact is linear, and the expected value of a single asset's return is simply net predicted return (in our case - residual) minus the order volume multiplied by a respective parameter, that is:
 
-$$\mu(w) = s - G w,$
+$$\mu(w) = s - G w,$$
 
 where:
 - $s$ - a vector of net predicted returns (here: predicted residuals less the corresponding fixed costs),
-- $G$ - a diagonal matrix of linear impact parameters; in our case: $G = \diag{\left( \left[ g_1 ... g_d \right] \right)}$,
+- $G$ - a diagonal matrix of linear impact parameters; in our case: $G = diag{\left( \left[ g_1 ... g_d \right] \right)}$,
 - $g_i = 2 \times \eta_{lin, i} \times \frac{\sigma_i}{V_i} \times p$ for $i = 1, ..., d$, where $\eta_{lin, i}$ is the estimated coefficient, $\sigma_i$ and $V_i$ are respective EWMA realized volatility and EWMA volume (as defined for [Weights Optimization Model](/README.md#weights-optimization-model)) for asset $i$, and $p$ is the current portfolio value,
 
 then we have:
@@ -258,9 +258,9 @@ $$f(w) = w^{\top} \left( s - G w \right) - \frac{\lambda}{2} w^{\top} \Sigma w =
 
 and:
 
-$$\grad f(w) = s - \left( 2 G + \lambda \Sigma \right) w$$
+$$\nabla f(w) = s - \left( 2 G + \lambda \Sigma \right) w$$
 
-Since $2 G + \lambda \Sigma$ is positive definite (see below), Hessian of $f$ is negative definite, and thus, $\grad f(w) = 0$ gives a local (and in this case - global) maximum. Therefore, the solution to the optimization problem defined above is:
+Since $2 G + \lambda \Sigma$ is positive definite (see below), Hessian of $f$ is negative definite, and thus, $\nabla f(w) = 0$ gives a local (and in this case - global) maximum. Therefore, the solution to the optimization problem defined above is:
 
 $$w = \left( 2 G + \lambda \Sigma \right)^{-1} s$$
 
