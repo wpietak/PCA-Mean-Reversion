@@ -276,7 +276,7 @@ The full procedure of trading simulation and returns (P&L) calculation, applied 
 1. If $t$ is not the first time-step, check if any positions from $t-1$ need to be kept (i.e., if there is a signal of same sign in $t$ as in $t-1$). For the positions that are kept, take values from before close in $t-1$, and for the rest - from after close in $t-1$ (step X). Use them to calculate returns on particular assets and P&L for $t-1$.
 2. Take correlation matrix estimated on the corresponding calibration period and volatilities estimated for $t$, and construct the covariance matrix. Next, obtain optimal portfolio weights $w^*$ for $t$, using the derived formula. A cap on leverage is applied. If the sum of absolute weights exceeds a specified threshold, weights are proportionately scaled down.
 3. Based on $w^*$, target position values for $t$ are calculated and compared with outstanding positions (not closed due to signal persistence) to determine adjustments necessary to make.
-4.  
+4. For any position that is partially closed, the price impact of the reduction is calculated using [Cost Calculation Model](/README.md#cost-calculation-model). Together with respective fixed costs (fees, half-spread and funding) it constitutes total costs of the reduction, which will be included in the realized P&L for $t$. For the remaining positions requiring adjustments (opening/increasing), the price impact and fixed cost at the open are calculated in an analogous way to obtain the position value after opening (net of opening costs).
 
 ### Hyper-Optimization
 
