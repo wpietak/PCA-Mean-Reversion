@@ -283,6 +283,12 @@ The full procedure of trading simulation and returns (P&L) calculation, applied 
 
 ### Hyper-Optimization
 
+The strategy requires specification of factors such as: (a) baskets to perform PCA on, (b) assets to be traded, (c) number of PCs to construct systematic components, (d) orders of lags in ARMA models. In order to select them, a hyper-optimization is performed on the in-sample rolling window during Walk-Forward Analysis (WFA). The general procedure of hyper-optimization is the following:
+1. A Genetic Optimization Algorithm is run to search the baskets space for a plateau of high performance in a trading simulation with simplified position sizing and return calculation.
+2. For the selected basket, ARMA residual predictions are made for all combinations of lag orders and numbers of PCs used to construct systematic components.
+3. A more detailed trading simulation is performed to search the parameter space for plateaus of high returns on individually traded assets.
+4. Candidates selected in the previous step are used to find the best performing combination of assets and parameters in a fully detailed trading simulation.
+
 s
 
 ### Walk-Forward Analysis
