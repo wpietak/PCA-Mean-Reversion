@@ -289,7 +289,13 @@ The strategy requires specification of factors such as: (a) baskets to perform P
 3. A more detailed trading simulation is performed to search the parameter space for plateaus of high returns on individually traded assets.
 4. Candidates selected in the previous step are used to find the best performing combination of assets and parameters in a fully detailed trading simulation.
 
-s
+#### Basket Selection
+
+A basket of assets used for PCA transformation is selected via Genetic Optimization Algorithm run on an in-sample window.
+
+#### Traded Assets, PCs Numbers and ARMA Orders Selection
+
+
 
 ### Walk-Forward Analysis
 
