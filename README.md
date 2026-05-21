@@ -311,6 +311,8 @@ Once the algorithm goes through all iterations, top individuals from the last ge
 
 For the selected basket, predictions of residuals in the in-sample period are generated for all assets which can be potentially traded, all considered numbers of PCs used to construct systematic components, and all considered orders of lags in the ARMA model.
 
+For each generated series of residual predictions, a trading simulation is run, where assets are individually traded. 
+
 ### Walk-Forward Analysis
 
 s
