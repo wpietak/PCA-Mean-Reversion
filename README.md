@@ -311,7 +311,9 @@ Once the algorithm goes through all iterations, top individuals from the last ge
 
 For the selected basket, predictions of residuals in the in-sample period are generated for all assets which can be potentially traded, all considered numbers of PCs used to construct systematic components, and all considered orders of lags in the ARMA model.
 
-For each generated series of residual predictions, a trading simulation is run, where assets are individually traded. 
+For each generated series of residual predictions, a trading simulation is run, where assets are individually traded. The simulation is the same as described in [Trading and Return Calculation](/README.md#trading-and-return-calculation), except each asset has it's own "account". That is, when the positions are taken for particular assets, correlations between them are not taken into account. Each asset has it's own (scalar-only) formula for optimal weight $w_i^*$, where the covariance matrix is replaced with respective variance. Value of the portfolio corresponding to a given asset is only impacted by positions taken on this asset. Similarly as in case of basket selection, few highest returns earned on each asset are removed. Next, cumulative returns are obtained and smoothed along the PCs number and ARMA lags orders dimensions. For this purpose, closeness of lags orders must be defined. For each pair of orders, the other pairs are classified into 3 categories according to their similarity. Smoothing is applied by taking a weighted average of a given cumulative return and returns for different orders and the same or similar number of PCs. Returns for similar orders and the same PCs number, or vice versa, have the highest weights (after the main return), and the weights decrease as proximity decreases. Based on these results, candidate PCs number & orders combinations for particular assets (as well as assets themselves) will be selected in WFA to further test their performance in joined trading.
+
+
 
 ### Walk-Forward Analysis
 
