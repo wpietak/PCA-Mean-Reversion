@@ -317,7 +317,11 @@ Candidate PCs number & orders combinations for particular assets are explored th
 
 ### Walk-Forward Analysis
 
-s
+Walk-Forward Analysis (WFA) is organized such that hyper-optimization is conducted on the in-sample rolling window to fine-tune hyper-parameters, and trading simulation is performed on the out-of-sample rolling window for the previously selected hyper-parameters.
+
+<img width="1221" height="768" alt="Zrzut ekranu 2026-05-23 235125" src="https://github.com/user-attachments/assets/99572bf2-c74a-46e0-8fea-b41b31e46a95" />
+
+
 
 ### Post-Analysis
 
