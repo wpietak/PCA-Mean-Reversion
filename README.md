@@ -329,6 +329,15 @@ The backtesting presented in this repository covers period from 22.01.2025 to 30
 - in-sample window ($\Delta t_{IS}$): 90 days,
 - out-of-sample window ($\Delta t_{OoS}$): 30 days.
 
+The specific steps taken in each walk-forward are as follows. First, data for respective periods is filtered. Then, Genetic Algorithm is run on the in-sample period, and extended performance statistics for top individuals from the last generation are obtained, as described in [Basket Selection](/README.md#basket-selection). The final basket is selected based on the weighted average of performance metrics in the neighbourhood. However, in order to avoid spikes in the searched space, additional conditions/corrections may be imposed. This includes:
+- (iteratively) filtering out baskets for which the performance metric exceeds the average of performance metrics in it's neighbourhood, unless:
+  - too many of them are removed, or
+  - all of the top ones are removed;
+- adding a penalty proportional to the difference between performance of the main basket and average performance in it's neighbourhood.
+
+The latter option has been applied in the presented backtesting.
+
+Once the basket is selected, ARMA predictions are generated for all considered numbers of PCs for systematic component construction and lags orders, and cumulative returns earned in individual trading are obtained for each asset and combination, as described in [Traded Assets, PCs Numbers and ARMA Orders Selection](/README.md#traded-assets-pcs-numbers-and-arma-orders-selection).
 
 ### Post-Analysis
 
