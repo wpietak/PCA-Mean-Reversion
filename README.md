@@ -343,7 +343,29 @@ Once the basket, assets to be traded, number of PCs for systematic component con
 
 ### Post-Analysis
 
-e
+The following analyses have been performed for the out-of-sample part of the conducted WFA:
+- Overall performance metrics:
+  - Sharpe ratio
+  - Sortino ratio
+  - Compound Annual Growth Rate (CAGR)
+  - Maximum Drawdown (MDD)
+  - Number of trades and win rate:
+    - for asset-level positions
+    - from the entire portfolio perspective
+  - Historical Value-at-Risk (HVaR):
+    - for daily return horizon
+    - for hourly return horizon
+  - Equity curve plot
+- Performance on different intervals:
+  - Sharpe, Sortino, CAGR and MDD for intervals starting at the beginning of each OoS period (until the end of backtesting period)
+  - Sharpe ratio for monthly rolling window
+- Empirical distribution of the returns:
+  - Basic descriptive statistics
+  - Histograms
+    - for hourly non-zero returns
+    - for daily returns
+
+All analyses are presented in the XXX notebook.
 
 ### Further Steps
 
