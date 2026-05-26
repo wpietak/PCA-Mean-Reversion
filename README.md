@@ -369,7 +369,21 @@ All analyses are presented in the XXX notebook.
 
 ### Further Steps
 
-h
+Potential further steps to improve the strategy and backtesting:
+- Take slippage into account.
+- Extend the backtesting interval by including end of 2025 and beginning of 2026.
+- Improve market microstructure models. In particular, introduce stochasticity. For the price impact models, estimate different parameters for different periods.
+- Incorporate non-linear price impact into the MVO; most likely with numerical solution. This would require showing a unique existence of the solution for the considered functional form.
+- Test different trading and signal generation horizons.
+- Test different return (residual) prediction methods:
+  - ARMA extensions to account for non-linear dependencies,
+  - modelling ARMA residuals on the top (e.g., predictions based on order flow), 
+  - using different models than ARMA.
+- Modify PCA transformation:
+  - conduct PCA on volatility-normalized returns,
+  - conduct modified PCA, taking into account non-linear relationships.
+- Set separate entry and exit criteria.
+- Model cumulative deviations from the asset price path determined by the systematic component, and long/short under-/overvalued assets, like in standard mean reversion strategies.
 
 ### Bibliography
 
