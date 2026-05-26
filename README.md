@@ -150,7 +150,7 @@ Moreover, various types of impact analysis have been performed for particular as
 - full costs of trade open and close for different order sizes in different conditions,
 - evolution of costs over time.
 
-Data download and preprocessing, and model estimation, analysis and testing can be found in the [Market_Impact_Models](/notebooks/Market_Impact_Models.ipynb) notebook.
+Data download and preprocessing, and model estimation, analysis and testing can be found in the [Market_Impact_Models_trunc](/notebooks/Market_Impact_Models_trunc.ipynb) notebook.
 
 #### Weights Optimization Model
 
@@ -171,7 +171,7 @@ where:
 
 The model is developed only for the moving averages corresponding to those in the selected Cost Calculation Model, and the same dataset is used for model estimation. The model is estimated with Weighted Least Squares (WLS) method. Weighting is adjusted such that the linear approximation is closer to the actual impact for order volumes that will be most often observed in trading simulation during backtesting. Observations with order volumes within ranges expected to be usually given by the Position Sizing Model (based on returns predictions) are assigned higher weights. 
 
-More specifically, weights are assigned based on Cost Calculation Model impact predictions for particular observations, using Gaussian kernel with specified impact center. Base model with equal weighting and models with different kernel center and scaling parameters are developed for each asset. Predictions for a non-linear model are compared visually with predictions for various linear models, and a kernel center & scaling pair is selected for each asset to construct weights. The final models are estimated, and WLS summaries and impact comparisons for WO vs. CC Models are provided. The estimation procedure and all analyses are presented in the [Market_Impact_Models](/notebooks/Market_Impact_Models.ipynb) notebook. 
+More specifically, weights are assigned based on Cost Calculation Model impact predictions for particular observations, using Gaussian kernel with specified impact center. Base model with equal weighting and models with different kernel center and scaling parameters are developed for each asset. Predictions for a non-linear model are compared visually with predictions for various linear models, and a kernel center & scaling pair is selected for each asset to construct weights. The final models are estimated, and WLS summaries and impact comparisons for WO vs. CC Models are provided. The estimation procedure and analyses are presented in the [Market_Impact_Models_trunc](/notebooks/Market_Impact_Models_trunc.ipynb) notebook. 
 
 ### Signal Generation and Position Sizing
 
