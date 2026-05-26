@@ -38,7 +38,7 @@ The initial universe of cryptocurrencies considered in the strategy is composed 
 - their value does not depend on any fundamental factors, and it is not strictly attached to specific figures, companies, organizations or events which could play a decisive role in their market perception,
 - for the vast majority of time, their price action is not idiosyncratically driven by news, announcements or events; they usually react to external factors in a similar manner.
 
-The names/shortcuts/tickers of memecoins belonging to the initial universe, as well as those selected as candidates for trading, can be found in XXX notebook.
+The names/shortcuts/tickers of memecoins belonging to the initial universe, as well as those selected as candidates for trading, can be found in [Run_WFA](/notebooks/Run_WFA.ipynb) notebook.
 
 ### Data
 
