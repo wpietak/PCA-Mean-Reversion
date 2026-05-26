@@ -38,7 +38,7 @@ The initial universe of cryptocurrencies considered in the strategy is composed 
 - their value does not depend on any fundamental factors, and it is not strictly attached to specific figures, companies, organizations or events which could play a decisive role in their market perception,
 - for the vast majority of time, their price action is not idiosyncratically driven by news, announcements or events; they usually react to external factors in a similar manner.
 
-The names/shortcuts/tickers of memecoins belonging to the initial universe, as well as those selected as candidates for trading, can be found in XXX notebook.
+The names/shortcuts/tickers of memecoins belonging to the initial universe, as well as those selected as candidates for trading, can be found in the [Run_WFA](/notebooks/Run_WFA.ipynb) notebook.
 
 ### Data
 
@@ -83,7 +83,7 @@ The following approaches have been considered to estimate daily bid-ask spreads:
 - <b>(5a) Huang-Stoll-based linear regression 1:</b> This approach is based on Huang and Stoll (1997) model: $\Delta P_t = \frac{S}{2} \Delta Q_t + \lambda \frac{S}{2} Q_{t-1} + e_t$, but focusing on differences between last and first prices of consecutive orders only. That is, only the price increments between the last transaction of a given order and the first transaction of the next order are modelled, while price differences between transactions belonging to the same order are not considered. For the purpose of estimation, trades are grouped on timestamp & taker side level, and first and last price are taken for each record (order). Next, for each order, the difference between its' first price and previous order's last price are calculated. Then, a linear regression model, involving $\Delta Q_t$ and $Q_{t-1}$ as explanatory variables and obtained price difference as dependent variable, is estimated via OLS method. First coefficient multiplied by 2 serves as an estimation of the bid-ask spread. Huang and Stoll (1997) use Generalized Method of Moments (GMM) as their estimation method, because they also consider models with additional moment conditions imposed, resulting in their overidentification. However, only the basic version - in which moment conditions involve orthogonality of residuals and explanatory variables solely - is considered here. In such case GMM is equivalent to OLS, since the number of parameters is then equal to the number of moment conditions (exact identification), and thus, there exists a unique set of parameters for which the vector of moment conditions is equal to 0.
 - <b>(5b) Huang-Stoll-based linear regression 2:</b> Huang and Stoll (1997) propose an extension of the model presented above, in which they allow for non-zero serial correlation in trade/order flow. Denoting reversal probability as $\pi$, we get $E \left[ Q_{t-1} | Q_{t-2} \right] = (1 - 2 \pi) Q_{t-2}$. Thanks to this, it is also possible to distinguish adverse selection ($\alpha$) and inventory risk ($\beta$) components of private information reveal impact ($\lambda = \alpha + \beta$). This is due to the fact that quote adjustments for inventory reasons depend only on actual trades, while adjustments for adverse selection reasons can also take into account order sign expectations. Hence, only the adverse selection component of quote adjustment requires correction for expectation, and, consequently, in the model there appears a term dependent on $\alpha$ which does not have a $\beta$ analog. The resulting final formula for price changes is the following: $\Delta P_t = \frac{S}{2} Q_t + (\alpha + \beta - 1) \frac{S}{2} Q_{t-1} + \alpha \frac{S}{2} (1 - 2 \pi) Q_{t-2} + e_t$. Note that it involves 4 parameters and only 3 explanatory variables. Huang and Stoll (1997) overcome this by using the bid-ask spreads observed for particular trades. However, $\pi$ also appears in the formula provided earlier, and it can be estimated separately. Here, we use the same dataset as in approach (5a), and we estimate $\pi$ as a frequency of order reversals. This estimator is then used to construct the third explanatory variable in the linear regression model based on the above formula, esitmated via OLS, similarly as in case of approach (5a). Analogously, the first obtained coefficient multiplied by 2 serves as an estimation of the bid-ask spread.
 
-The implementation of the entire bid-ask spread time series construction process, including data download and preprocessing, models estimation, and results summary and analysis, is presented in XXX notebook. The eventually selected approach is <b>(5a) Huang-Stoll-based linear regression 1</b>. Flooring and smoothing was applied to the spreads estimated with this approach to obtain the final time series used in backtesting.
+The implementation of the entire bid-ask spread time series construction process, including data download and preprocessing, models estimation, and results summary and analysis, is presented in the [Bid-Ask_Spread](/notebooks/Bid-Ask_Spread.ipynb) notebook. The eventually selected approach is <b>(5a) Huang-Stoll-based linear regression 1</b>. Flooring and smoothing was applied to the spreads estimated with this approach to obtain the final time series used in backtesting.
 
 Floor is applied to each daily spread at the tick size level. Tick size is implied from klines based on the maximum number of digits after decimal point in the quoted prices for a given day. In order to reduce the impact of short-term noise on estimations, smoothing is applied to the floored spreads by taking a 5-day centered moving average weighted with a triangular kernel. 
 
@@ -150,7 +150,7 @@ Moreover, various types of impact analysis have been performed for particular as
 - full costs of trade open and close for different order sizes in different conditions,
 - evolution of costs over time.
 
-Data download and preprocessing, and model estimation, analysis and testing can be found in XXX notebook.
+Data download and preprocessing, and model estimation, analysis and testing can be found in the [Market_Impact_Models](/notebooks/Market_Impact_Models.ipynb) notebook.
 
 #### Weights Optimization Model
 
@@ -171,7 +171,7 @@ where:
 
 The model is developed only for the moving averages corresponding to those in the selected Cost Calculation Model, and the same dataset is used for model estimation. The model is estimated with Weighted Least Squares (WLS) method. Weighting is adjusted such that the linear approximation is closer to the actual impact for order volumes that will be most often observed in trading simulation during backtesting. Observations with order volumes within ranges expected to be usually given by the Position Sizing Model (based on returns predictions) are assigned higher weights. 
 
-More specifically, weights are assigned based on Cost Calculation Model impact predictions for particular observations, using Gaussian kernel with specified impact center. Base model with equal weighting and models with different kernel center and scaling parameters are developed for each asset. Predictions for a non-linear model are compared visually with predictions for various linear models, and a kernel center & scaling pair is selected for each asset to construct weights. The final models are estimated, and WLS summaries and impact comparisons for WO vs. CC Models are provided. The estimation procedure and all analyses are presented in XXX notebook. 
+More specifically, weights are assigned based on Cost Calculation Model impact predictions for particular observations, using Gaussian kernel with specified impact center. Base model with equal weighting and models with different kernel center and scaling parameters are developed for each asset. Predictions for a non-linear model are compared visually with predictions for various linear models, and a kernel center & scaling pair is selected for each asset to construct weights. The final models are estimated, and WLS summaries and impact comparisons for WO vs. CC Models are provided. The estimation procedure and all analyses are presented in the [Market_Impact_Models](/notebooks/Market_Impact_Models.ipynb) notebook. 
 
 ### Signal Generation and Position Sizing
 
@@ -323,7 +323,7 @@ Walk-Forward Analysis (WFA) is organized such that hyper-optimization is conduct
 
 Such walk-forwards are rolled for the entire backtesting period. That is, subsequent out-of-sample periods start where the preceding ones ended, and the in-sample window is shifted accordingly, until the entire backtesting period is covered. The last out-of-sample period may be shorter, if the previous one ended less than $\Delta t_{OoS}$ before the end of backtesting period. 
 
-The backtesting presented in this repository covers period from 22.01.2025 to 30.09.2025. The following window lengths have been set for the WFA run in the XXX notebook:
+The backtesting presented in this repository covers period from 22.01.2025 to 30.09.2025. The following window lengths have been set for the WFA run in the [Run_WFA](/notebooks/Run_WFA.ipynb) notebook:
 - calibration window ($\Delta t_{cal}$): 30 days,
 - deployment window ($\Delta t_{dep}$): 3 days,
 - in-sample window ($\Delta t_{IS}$): 90 days,
@@ -365,7 +365,7 @@ The following analyses have been performed for the out-of-sample part of the con
     - for hourly non-zero returns
     - for daily returns
 
-All analyses are presented in the XXX notebook.
+All analyses are presented in the [Run_WFA](/notebooks/Run_WFA.ipynb) notebook.
 
 ### Further Steps
 
