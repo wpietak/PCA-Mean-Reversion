@@ -1,0 +1,37 @@
+├── README.md
+├── intermediate_output
+│   ├── df_bas_2501_2509.csv
+│   └── imp_mod_params.csv
+├── notebooks
+│   ├── Bid-Ask_Spread.ipynb
+│   ├── Market_Impact_Models.ipynb
+│   ├── Market_Impact_Models_trunc.ipynb
+│   ├── README.md
+│   └── Run_WFA.ipynb
+├── results
+│   └── WFA_3m_IS_per_1m_OoS_per
+│       ├── WFA_OoS_start_date.csv
+│       ├── armas_pred.xlsx
+│       ├── cum_rets.xlsx
+│       ├── gens_perf_cache.xlsx
+│       ├── gens_perf_last.xlsx
+│       ├── joi_tr_perf.xlsx
+│       ├── rets_g_oos.csv
+│       ├── top_combs.xlsx
+│       └── top_perf.xlsx
+├── src
+│   ├── __init__.py
+│   ├── data.py
+│   ├── export.py
+│   ├── hyper_optimization.py
+│   ├── performance.py
+│   ├── raw_data
+│   │   ├── funding_rate_history_1000TOSHIUSDT.xlsx
+│   │   ├── funding_rate_history_FWOGUSDT.xlsx
+│   │   ├── funding_rate_history_GIGAUSDT.xlsx
+│   │   └── funding_rate_history_HPOS10IUSDT.xlsx
+│   ├── risk_cost.py
+│   ├── state.py
+│   └── wfa.py
+├── tree.out
+└── tree.py
