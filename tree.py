@@ -1,12 +1,19 @@
 import os
 
-def generate_tree(startpath="."):
-    for root, dirs, files in os.walk(startpath):
-        level = root.replace(startpath, "").count(os.sep)
-        indent = " " * 4 * level
-        print(f"{indent}{os.path.basename(root)}/")
-        subindent = " " * 4 * (level + 1)
-        for f in files:
-            print(f"{subindent}{f}")
+ignore = {".git", "__pycache__", ".ipynb_checkpoints"}
 
-generate_tree()
+def print_tree(path=".", prefix=""):
+    items = sorted(os.listdir(path))
+    items = [i for i in items if i not in ignore]
+
+    for i, item in enumerate(items):
+        full_path = os.path.join(path, item)
+        connector = "└── " if i == len(items) - 1 else "├── "
+
+        print(prefix + connector + item)
+
+        if os.path.isdir(full_path):
+            extension = "    " if i == len(items) - 1 else "│   "
+            print_tree(full_path, prefix + extension)
+
+print_tree()
